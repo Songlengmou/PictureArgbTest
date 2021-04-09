@@ -4,14 +4,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".one.OneActivity">
+    tools:context=".three.ThreeActivity">
 
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="200dp"
         android:scaleType="fitXY"
-        android:src="@mipmap/pic2" />
+        android:src="@drawable/pic1" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycleView"

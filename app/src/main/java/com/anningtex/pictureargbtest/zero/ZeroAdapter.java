@@ -1,11 +1,10 @@
-package com.anningtex.pictureargbtest.one;
+package com.anningtex.pictureargbtest.zero;
 
 import android.graphics.Color;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 
-import com.annimon.stream.Stream;
 import com.anningtex.pictureargbtest.R;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
@@ -16,21 +15,17 @@ import java.util.Map;
 /**
  * @Author Song
  */
-public class OneAdapter extends BaseQuickAdapter<String, BaseViewHolder> {
-    private Map<String, Integer> rgbCountList;
-
-    public OneAdapter(int layoutResId, @Nullable List<String> data, Map<String, Integer> rgbCountList) {
+public class ZeroAdapter extends BaseQuickAdapter<String, BaseViewHolder> {
+    public ZeroAdapter(int layoutResId, @Nullable List<String> data) {
         super(layoutResId, data);
-        this.rgbCountList = rgbCountList;
     }
 
     @Override
     protected void convert(BaseViewHolder helper, String rgb) {
         TextView tvArgb = helper.itemView.findViewById(R.id.tv_argb);
-        long count = rgbCountList.get(rgb);
-        tvArgb.setText("(" + rgb + ") count: " + count);
+        tvArgb.setText("(" + rgb + ")");
         String[] strings = rgb.split(",");
-        int argb = Color.rgb(Integer.parseInt(strings[0]), Integer.parseInt(strings[1]), Integer.parseInt(strings[2]));
+        int argb = Color.argb(Integer.parseInt(strings[0]), Integer.parseInt(strings[1]), Integer.parseInt(strings[2]), Integer.parseInt(strings[3]));
         tvArgb.setBackgroundColor(argb);
     }
 }

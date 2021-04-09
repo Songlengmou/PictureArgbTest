@@ -3,6 +3,7 @@
     package="com.anningtex.pictureargbtest">
 
     <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -10,8 +11,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.PictureArgbTest">
+
+        <activity android:name=".four.FourActivity" />
+        <activity android:name=".three.ThreeActivity" />
         <activity android:name=".two.TwoActivity" />
         <activity android:name=".one.OneActivity" />
+        <activity android:name=".zero.ZeroActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

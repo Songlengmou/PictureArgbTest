@@ -1,14 +1,16 @@
-package com.anningtex.pictureargbtest.one;
+package com.anningtex.pictureargbtest.four;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
-
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+import android.view.View;
+import android.widget.Button;
 
 import com.anningtex.pictureargbtest.R;
 
@@ -17,32 +19,37 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * @author Administrator
  */
-public class OneActivity extends AppCompatActivity {
+public class FourActivity extends AppCompatActivity implements View.OnClickListener {
+    private Button mBtnSort;
     private RecyclerView mRecycleView;
-    private OneAdapter adapter;
+    private FourAdapter adapter;
     private List<String> mStringList = new ArrayList<>();
     private int num = 0;
     private Bitmap mSrc;
     private int mHeight, mWidth;
     private Map<String, Integer> mIntegerMap = new HashMap<>();
+    private boolean show = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_one);
+        setContentView(R.layout.activity_four);
         initView();
         getPixColor();
     }
 
     private void initView() {
         mRecycleView = findViewById(R.id.recycleView);
-        adapter = new OneAdapter(R.layout.item_one, mStringList, mIntegerMap);
+        adapter = new FourAdapter(R.layout.item_one, mStringList, mIntegerMap);
         mRecycleView.setLayoutManager(new GridLayoutManager(this, 3));
         mRecycleView.setAdapter(adapter);
+        mBtnSort = findViewById(R.id.btn_sort);
+        mBtnSort.setOnClickListener(this);
     }
 
     public void getPixColor() {
@@ -50,7 +57,6 @@ public class OneActivity extends AppCompatActivity {
         mHeight = mSrc.getHeight();
         mWidth = mSrc.getWidth();
         runnable.run();
-        adapter.notifyDataSetChanged();
     }
 
     Runnable runnable = new Runnable() {
@@ -74,43 +80,53 @@ public class OneActivity extends AppCompatActivity {
                             } else {
                                 mIntegerMap.put(rgb, 1);
                             }
-
-                            if (!mStringList.contains(rgb)) {
-                                mStringList.add(rgb);
-                            }
                             num++;
-                            Log.e("666***", "num: " + num + "    mStringListSize: " + mStringList.size());
+                            Log.e("666***", "num: " + num);
                         }
                     }
                 }
             }
-
-            //根据数字顺序排序
-            Collections.sort(mStringList, (o1, o2) -> {
-                if (o1.contains(",") && o2.contains(",")) {
-                    String[] split = o1.split(",");
-                    String[] strings = o2.split(",");
-                    int i = Integer.parseInt(split[0]) - Integer.parseInt(strings[0]);
-                    if (i == 0) {
-                        int j = Integer.parseInt(split[1]) - Integer.parseInt(strings[1]);
-                        if (j == 0) {
-                            int w = Integer.parseInt(split[2]) - Integer.parseInt(strings[2]);
-                            return w;
-                        } else {
-                            return j;
-                        }
-                    } else {
-                        return i;
-                    }
-                }
-                return 0;
-            });
+            mStringList.addAll(mIntegerMap.keySet());
+            adapter.notifyDataSetChanged();
         }
     };
+
+    private void listSort() {
+        Collections.sort(mStringList, (o1, o2) -> {
+            if (mIntegerMap.get(o1) > mIntegerMap.get(o2)) {
+                return -1;
+            } else if (mIntegerMap.get(o1) < mIntegerMap.get(o2)) {
+                return 1;
+            }
+            return 0;
+        });
+        adapter.notifyDataSetChanged();
+    }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
         runnable = null;
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.btn_sort:
+                runOnUiThread(() -> {
+                    if (show) {
+                        mStringList.clear();
+                        mStringList.addAll(mIntegerMap.keySet());
+                        adapter.notifyDataSetChanged();
+                        show = false;
+                    } else {
+                        listSort();
+                        show = true;
+                    }
+                });
+                break;
+            default:
+                break;
+        }
     }
 }

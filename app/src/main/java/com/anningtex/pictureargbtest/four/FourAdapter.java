@@ -1,11 +1,10 @@
-package com.anningtex.pictureargbtest.one;
+package com.anningtex.pictureargbtest.four;
 
 import android.graphics.Color;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 
-import com.annimon.stream.Stream;
 import com.anningtex.pictureargbtest.R;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
@@ -16,10 +15,10 @@ import java.util.Map;
 /**
  * @Author Song
  */
-public class OneAdapter extends BaseQuickAdapter<String, BaseViewHolder> {
+public class FourAdapter extends BaseQuickAdapter<String, BaseViewHolder> {
     private Map<String, Integer> rgbCountList;
 
-    public OneAdapter(int layoutResId, @Nullable List<String> data, Map<String, Integer> rgbCountList) {
+    public FourAdapter(int layoutResId, @Nullable List<String> data, Map<String, Integer> rgbCountList) {
         super(layoutResId, data);
         this.rgbCountList = rgbCountList;
     }
